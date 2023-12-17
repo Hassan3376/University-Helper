@@ -1,0 +1,787 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
+public class ProStart {
+    static Scanner input = new Scanner(System.in);
+   static List<String> countries = new ArrayList<>();
+    public static void main(String... args) {
+        countries.add("(UK) United Kingdom");
+        countries.add("(US) USA");
+        countries.add("(SW) Switzerland");
+        countries.add("(JAP)  JAPAN");
+        countries.add("(BEL)  BELGIUM");
+        countries.add("(ITL)  ITALY");
+        countries.add("(CHI)  CHINA");
+        countries.add("(AUS)  AUSTRALIA");
+        countries.add("(FRA)  FRANCE");
+        countries.add("(TUR)  TURKEY");
+        countries.add("(DEN)  DENMARK");
+        countries.add("(CAN)  CANADA");
+        countries.add("(GER)  GERMANY");
+        countries.add("(SK)  SOUTH KOREA");
+        INTRO();
+        Selection();
+
+    }
+    static void INTRO() {
+        System.out.println("--------------------------------");
+        System.out.println("  WELCOME TO EDUCATION HELPER");
+        System.out.println("--------------------------------");
+        System.out.println("PRESS 1 TO SIGN IN");
+        System.out.println("PRESS 2 TO LOGIN");
+        System.out.println("PRESS 3 FOR ADMIN");
+        System.out.println("PRESS 4 TO EXIT ");
+        System.out.println("PRESS 5 TO SUGGESTIONS ");
+        System.out.println("PRESS 6 TO COMPLAINTS ");
+
+    }
+    static void Selection(){
+        // selection of menu
+        int option; // selection i.e 1,2,3
+        while (true) {
+            try {
+                option = input.nextInt();
+                if (option >= 1 && option <= 6) {
+                    break;
+                } else
+                    System.out.println("Invalid, Enter Valid Input");
+
+            } catch (InputMismatchException f) {
+                String MissMatch = input.next();
+                System.out.println("Enter Valid Input");
+            }
+        }
+        if (option == 1) {
+            SignIn();
+        }
+        if (option == 2) {
+            LogIn();
+
+        }if(option==3){
+            AdminMenu();
+            Selection();
+        }
+        if(option==4){
+            Exit();
+        }
+        if(option==5){
+            Suggestions();
+            Exit();
+        }
+        if(option==6){
+            Complaints();
+            Exit();
+        }
+    }
+    static void LogIn() {
+        System.out.println("-----------------------");
+        System.out.println("       LOG IN");
+        System.out.println("-----------------------");
+        while (true) {
+            System.out.println("enter username");
+            String username = input.next();
+            System.out.println("enter password");
+            String pass = input.next();
+            File User = new File("UserId.txt");
+            File Pass = new File("UserPass.txt");
+            try {
+                User.createNewFile();
+                Pass.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+            try {
+                Scanner sc1 = new Scanner(User);
+                Scanner sc2 = new Scanner(Pass);
+                String check1 = sc1.nextLine();
+                String check2 = sc2.nextLine();
+                if (username.equals(check1) && (pass.equals(check2))) {
+                    System.out.println("LOGGED IN SUCCESSFULLY");
+                    System.out.println("-----------------------------");
+                    break;
+                } else
+                    System.out.println("Invalid Password/Username");
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
+        Field();
+
+    }
+
+    static void SignIn() {
+        System.out.println("-----------------------");
+        System.out.println("Make Your Profile");
+        System.out.println("-----------------------");
+        while (true) {
+            try {
+                FileWriter d1 = new FileWriter("UserId.txt");
+                FileWriter d2 = new FileWriter("UserPass.txt");
+                System.out.println("Enter Username: ");
+
+                String username = input.next();
+                System.out.println("Enter Password: ");
+                String pass = input.next();
+                System.out.println("Enter Your Full Name");
+                String name = input.nextLine();
+                String blank = input.nextLine();
+                System.out.println("Enter FSC Marks");
+                int marks = input.nextInt();
+                d1.write(username);
+                d2.write(pass);
+                d1.close();
+                d2.close();
+                System.out.println("--------------------------------");
+                System.out.println(" Profile Created Successfully");
+                System.out.println("--------------------------------");
+                break;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("PRESS 1 TO CONTINUE \nPRESS 2 TO CHANGE USERNAME/PASSWORD");
+        String choice = "";
+        while (true) {
+            choice = input.next();
+            if (choice.equals("1") || choice.equals("2")) {
+                break;
+            } else {
+                System.out.println("Invalid Input");
+                choice = input.next();
+            }
+        }
+        if (choice.equals("1")) {
+            INTRO();
+            Selection();
+        }
+        if (choice.equals("2")) {
+            while (true) {
+                try {
+                    FileWriter d1 = new FileWriter("UserId.txt");
+                    FileWriter d2 = new FileWriter("UserPass.txt");
+                    System.out.println("enter new username");
+                    String username = input.nextLine();
+                    String blank = input.nextLine();
+                    System.out.println("enter new password");
+                    String pass = input.nextLine();
+                    d1.write(username);
+                    d2.write(pass);
+                    d1.close();
+                    d2.close();
+                    System.out.println("---------------------------------");
+                    System.out.println(" Password changed Successfully");
+                    System.out.println("---------------------------------");
+                    break;
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+            }
+
+        }
+    }
+    static void Suggestions(){
+        System.out.println("---------------------------");
+        System.out.println("       SUGGESTIONS");
+        System.out.println("---------------------------");
+        System.out.println("Enter Your Suggestions:");
+        String blank = input.nextLine();
+        String sug = input.nextLine();
+        System.out.println("Thank you for your Suggestions");
+    }
+    static void Complaints(){
+        System.out.println("---------------------------");
+        System.out.println("      COMPLAINTS");
+        System.out.println("---------------------------");
+        System.out.println("Enter your complaints if any: ");
+        String blank = input.nextLine();
+        String com = input.nextLine();
+        System.out.println("Thank you for your Complaints");
+    }
+    static void AdminMenu(){
+        System.out.println("---------------------------");
+        System.out.println("       ADMIN MENU");
+        System.out.println("---------------------------");
+
+        while(true) {
+            System.out.println("ENTER USERNAME");
+            String username = input.next();
+            System.out.println("ENTER PASSWORD");
+            String pass = input.next();
+            if (username.equals("hassan") && pass.equals("123")) {
+                System.out.println("---------------------------");
+                System.out.println("  Welcome To Admin Menu");
+                System.out.println("---------------------------");
+                break;
+            } else
+                System.out.println("invalid Username/Password");
+        }
+        System.out.println("PRESS 1 TO REMOVE COUNTRIES\nPRESS 2 TO ADD COUNTRIES");
+        int count=0;
+        int select = input.nextInt();
+        if(select==1) { // Removing countries
+            int n = 0;
+            for (int i = 0; i < countries.size(); i++) {
+                count++;
+                System.out.println(count+" "+countries.get(i)); // to print out all countries
+
+            }
+            RemoveCountry(countries, n);
+            System.out.println();
+
+            int option;
+            while (true) {
+                System.out.println("To Remove another country Press 1\nPress 2 to for Main Menu");
+                option = input.nextInt();
+                count=0;
+                    if(option==1){
+                        for (int i = 0; i < countries.size(); i++) {
+                            count++;
+                            System.out.println(count+" "+countries.get(i)); // to print out all countries
+                        }
+                        RemoveCountry(countries, n);
+                        System.out.println();
+                    }
+                    if(option==2){
+                        INTRO();
+                        break;
+                    }
+            }
+        }
+        String n=" ";
+        if(select==2){
+            // TO ADD COUNTRIES
+            for (int i = 0; i < countries.size(); i++) {
+                count++;
+                System.out.println(count+" "+countries.get(i)); // to print out all countries
+
+            }
+            AddCountry(countries, n);
+            System.out.println();
+
+            int option;
+            while (true) {
+                System.out.println("To Add another country Press 1\nPress 2 to for Main Menu");
+                option = input.nextInt();
+                count=0;
+                if(option==1){
+                    for (int i = 0; i < countries.size(); i++) {
+                        count++;
+                        System.out.println(count+" "+countries.get(i)); // to print out all countries
+                    }
+                    AddCountry(countries, n);
+                    System.out.println();
+                }
+                if(option==2){
+                    INTRO();
+                    break;
+                }
+            }
+        }
+    }
+
+    static void Exit() {
+        System.out.println("-----------------------------");
+        System.out.println("      PROGRAM CLOSED");
+        System.out.println("-----------------------------");
+    }
+
+    static void Countries() {
+        // to print countries of LIST
+        System.out.println("--------------------------------------------------");
+        System.out.println("Select a Country in which you want to Study");
+        System.out.println("              E.g US,FRA,JAP ");
+        System.out.println("--------------------------------------------------");
+        for (int i = 0; i < countries.size(); i++) {
+            System.out.println(countries.get(i)); // to print out all countries
+        }
+    }
+    static void Field() {
+        // to select medical or engineering field
+        System.out.println("Press 1 For Medical Colleges\nPress 2 For Engineering Universities");
+        String select = input.next();
+        while (true) {
+            if (select.equals("1")) {
+                Countries();
+                MedicalCollges();
+                break;
+            }
+            if (select.equals("2")) {
+                Countries();
+                EngineeringColleges();
+                break;
+            } else
+                System.out.println("Enter Valid Input");
+            select = input.next();
+        }
+    }
+    static void MedicalCollges() {
+        String select;
+        while (true) {
+                select = input.next().toUpperCase();
+                if (select.equals("UK") || select.equals("US")|| select.equals("SW")|| select.equals("JAP")|| select.equals("BEL")|| select.equals("ITL")|| select.equals("CHI")
+                    || select.equals("AUS")|| select.equals("FRA")|| select.equals("TUR")|| select.equals("DEN")|| select.equals("CAN")|| select.equals("GER") || select.equals("SK")) {
+                    break;
+                } else {
+                    System.out.println("Invalid Input");
+                }
+            }
+
+
+
+        if (select.equals("UK")) {
+            String[] UKmedical = {"1) London Imperial College", "2) Edinburgh Medical School (UCL)", "3) Manchester NHS", "4) Queen Mary University, London", "5) St. George's, London University",
+                    "6) Brighton and Sussex Medical College", "7) Newman College", "8) City College Birmingham", "9) Citylabs Campus", "10) London King's College"};
+            String []UKDetails = {"Semester Fee $1200\nHostels are available\nGlobal Ranking 23","Semester Fee $1500\nHostels are available\nGlobal Ranking 67","Semester Fee $1800\nHostels are not available\nGlobal Ranking 155","Semester Fee $1100\nHostels are available\nGlobal Ranking 222",
+                    "Semester Fee $900\nHostels are available\nGlobal Ranking 455","Semester Fee $2200\nHostels are available\nGlobal Ranking 190","Semester Fee $1400\nHostels are not available\nGlobal Ranking 255","Semester Fee $1800\nHostels are  available\nGlobal Ranking 655","Semester Fee $1500\nHostels are not available\nGlobal Ranking 275",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 661","Semester Fee $1700\nHostels are available\nGlobal Ranking 1255",};
+
+            PrintingColleges(UKmedical);
+            int n= input.nextInt();
+            SelectingCollege(UKmedical,n);
+            SelectingCollege(UKDetails,n);
+
+        }
+        if (select.equals("US")) {
+            String[] USAmedical = {"1) Marist College Hartwick", "2) College Albany", "3) College of pharmacy and Health Sciences", "4) Claremont McKenna College", "5)" +
+                    " Harvey Mudd College", "6) Pepperdine College", "7) Agnes Scott College", "8) Berry College", "9) Emmanuel College", "10) Dalton State College"};
+            String []USADetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891",};
+            PrintingColleges(USAmedical);
+            int n= input.nextInt();
+            SelectingCollege(USAmedical,n);
+            SelectingCollege(USADetails,n);
+
+        }
+        if (select.equals("SW")) {
+            String[] Switzerlandmedical = {"1) ETH Zurich College", "2) Lucernae Medical College", "3) Bern University of Applied Sciences", "4) Zurich College of Medicine"};
+            String []SwitzerlandmedicalDetailsDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 976","Semester Fee $1200\nHostels are available\nGlobal Ranking 657","Semester Fee $1000\nHostels are not available\nGlobal Ranking 1105",
+                    "Semester Fee $1200\nHostels are available\nGlobal Ranking 222", "Semester Fee $700\nHostels are available\nGlobal Ranking 675","Semester Fee $2200\nHostels are available\nGlobal Ranking 292"
+                    ,"Semester Fee $1400\nHostels are not available\nGlobal Ranking 940"};
+            PrintingColleges(Switzerlandmedical);
+            int n= input.nextInt();
+            SelectingCollege(Switzerlandmedical,n);
+            SelectingCollege(SwitzerlandmedicalDetailsDetails,n);
+
+        }
+        if (select.equals("JAP")) {
+            String[] Japanmedical = {"1) Tokyo University of Science", "2)Rikkyo University", "3) Hiroshima Jogakuin College", "4) Onomichi City University", "5)" +
+                    " Kyoto Gakuen University", "6) Osaka Medical College", "7) Kansai Medical University", "8) Osaka Dental University", "9) Gifu College of Nursing", "10) Nagasaki International University"};
+            String []JAPDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891",};
+            PrintingColleges(Japanmedical);
+            int n= input.nextInt();
+            SelectingCollege(Japanmedical,n);
+            SelectingCollege(JAPDetails,n);
+        }
+        if (select.equals("BEL")) {
+            String[] Belgiummedical = {"1) Universite Libre de Bruxelles", "2) Vesalius College", "3) EPHEC University College", "4) Erasmus University College Brussels", "5)" +
+                    " Antwerp Maritime Academy", "6) The Institute of Tropical Medicine", "7) Artesis Hogeschool Antwerpen", "8) Haute Ecole Lucia de Brouckere"};
+            String []BELDetails = {"Semester Fee $1900\nHostels are available\nGlobal Ranking 176","Semester Fee $2200\nHostels are available\nGlobal Ranking 327","Semester Fee $1100\nHostels are not available\nGlobal Ranking 125","Semester Fee $1750\nHostels are available\nGlobal Ranking 512",
+                    "Semester Fee $1700\nHostels are available\nGlobal Ranking 975","Semester Fee $2200\nHostels are available\nGlobal Ranking 492","Semester Fee $1400\nHostels are not available\nGlobal Ranking 140",
+                    "Semester Fee $1800\nHostels are  available\nGlobal Ranking 855","Semester Fee $1300\nHostels are not available\nGlobal Ranking 795",};
+            PrintingColleges(Belgiummedical);
+            int n= input.nextInt();
+            SelectingCollege(Belgiummedical,n);
+            SelectingCollege(BELDetails,n);
+
+        }
+        if (select.equals("ITL")) {
+            String[] Italymedical = {"1) Campus Bio-Medico University of Rome", "2) Sapienza University of Rome", "3) The International Telematic University", "4) Sant Anna School", "5)" +
+                    " Scuola Normale Superiore", "6) University of Siena", "7) Domus Academy", "8) IULM University of Milan", "9) Marangoni Institute Milan"};
+            String []ITLDetails = {"Semester Fee $1900\nHostels are available\nGlobal Ranking 176","Semester Fee $2200\nHostels are available\nGlobal Ranking 327","Semester Fee $1100\nHostels are not available\nGlobal Ranking 125","Semester Fee $1750\nHostels are available\nGlobal Ranking 512",
+                    "Semester Fee $1700\nHostels are available\nGlobal Ranking 975","Semester Fee $2200\nHostels are available\nGlobal Ranking 492","Semester Fee $1400\nHostels are not available\nGlobal Ranking 140",
+                    "Semester Fee $1800\nHostels are  available\nGlobal Ranking 855"};
+            PrintingColleges(Italymedical);
+            int n= input.nextInt();
+            SelectingCollege(Italymedical,n);
+            SelectingCollege(ITLDetails,n);
+
+        }
+        if (select.equals("CHI")) {
+            String[] Chinamedical = {"1) Chang ‘an University", "2) Xia Dian University", "3) Peking University", "4) Claremont McKenna College", "5)" +
+                    " Beijing Normal University", "6) Renmin University of Chinae", "7) Tianjin Chengjiang University"};
+            String []CHIDetails = {"Semester Fee $1900\nHostels are available\nGlobal Ranking 176","Semester Fee $2200\nHostels are available\nGlobal Ranking 327","Semester Fee $1100\nHostels are not available\nGlobal Ranking 125",
+                    "Semester Fee $1750\nHostels are available\nGlobal Ranking 512",
+                    "Semester Fee $1700\nHostels are available\nGlobal Ranking 975","Semester Fee $2200\nHostels are available\nGlobal Ranking 492","Semester Fee $1400\nHostels are not available\nGlobal Ranking 140",};
+            PrintingColleges(Chinamedical);
+            int n= input.nextInt();
+            SelectingCollege(Chinamedical,n);
+            SelectingCollege(CHIDetails,n);
+
+        }
+        if (select.equals("AUS")) {
+            String[] Austrailiamedical = {"1) University of Melbourne", "2) Monash University", "3) Asia Pacific International College", "4) Macquarie University", "5)" +
+                    " University of New South Wales", "6) Australian National University", "7) University of Canberra", "8) Australian Institute of Family Counselling"};
+            String []AUSDetails = {"Semester Fee $1900\nHostels are available\nGlobal Ranking 176","Semester Fee $2200\nHostels are available\nGlobal Ranking 327","Semester Fee $1100\nHostels are not available\nGlobal Ranking 125",
+                    "Semester Fee $1750\nHostels are available\nGlobal Ranking 512",
+                    "Semester Fee $1700\nHostels are available\nGlobal Ranking 975","Semester Fee $2200\nHostels are available\nGlobal Ranking 492","Semester Fee $1400\nHostels are not available\nGlobal Ranking 140","Semester Fee $1400\nHostels are not available\nGlobal Ranking 140"};
+            PrintingColleges(Austrailiamedical);
+            int n= input.nextInt();
+            SelectingCollege(Austrailiamedical,n);
+            SelectingCollege(AUSDetails,n);
+
+        }
+        if (select.equals("FRA")) {
+            String[] Francemedical = {"1) Le Cordon Bleu", "2) Paris Dauphine University", "3) ECE Paris Ecole d’Igenieurs.", "4) INSA Lyon", "5)" +
+                    " Jean Moulin University", "6) Joseph Fourier university", "7) University of Grenoble", "8) Paul Sabatier University", "9) INSA Toulouse"};
+            String []FRADetails = {"Semester Fee $1900\nHostels are available\nGlobal Ranking 176","Semester Fee $2200\nHostels are available\nGlobal Ranking 327","Semester Fee $1100\nHostels are not available\nGlobal Ranking 125",
+                    "Semester Fee $1750\nHostels are available\nGlobal Ranking 512","Semester Fee $1700\nHostels are available\nGlobal Ranking 975",
+                    "Semester Fee $1700\nHostels are available\nGlobal Ranking 975","Semester Fee $2200\nHostels are available\nGlobal Ranking 492","Semester Fee $1400\nHostels are not available\nGlobal Ranking 140","Semester Fee $1400\nHostels are not available\nGlobal Ranking 140"};
+            PrintingColleges(Francemedical);
+            int n= input.nextInt();
+            SelectingCollege(Francemedical,n);
+            SelectingCollege(FRADetails,n);
+
+        }
+        if (select.equals("TUR")) {
+            String[] Turkeymedical = {"1) Ankara Yildirim Beyazit University", "2) Chanakya university (central campus)", "3) Atilim university", "4) Hacettepe university"};
+            String []TURDetails = {"Semester Fee $1900\nHostels are available\nGlobal Ranking 176","Semester Fee $2200\nHostels are available\nGlobal Ranking 327","Semester Fee $2200\nHostels are available\nGlobal Ranking 327"};
+            PrintingColleges(Turkeymedical);
+            int n= input.nextInt();
+            SelectingCollege(Turkeymedical,n);
+            SelectingCollege(TURDetails,n);
+
+            }
+        if (select.equals("DEN")) {
+            String[] Denmarkmedical = {"1) Center for RNA Medicine", "2) Institute for Medicine of Sundhedsteknologi ", "3) Aalborg University Hospital", "4) Institute for Klinisk Medicin, Aarhus Universität", "5)" +
+                    " Health, Aarhus Universität", "6) Department of Biomedicine, Aarhus University", "7) Københavns Universität", "8) The University of Copenhagen Health and Medical Sciences",
+                    "9) School of Global Health, University of Copenhagen", "10) Odense University Hospital"};
+            String []DENDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891"};
+            PrintingColleges(Denmarkmedical);
+            int n= input.nextInt();
+            SelectingCollege(Denmarkmedical,n);
+            SelectingCollege(DENDetails,n);
+
+        }
+        if (select.equals("CAN")) {
+            String[] Canadamedical = {"1) Marist College Hartwick", "2) College Albany", "3) College of pharmacy and Health Sciences", "4) University of Stuttgart", "5)" +
+                    " Institut für Bildungsprozessforschung und Bildungsmanagement", "6) University of Hohenheim", "7) International School of Management, Campus Stuttgart", "8) Asklepios Medical College"};
+            String []CANDetails = {"Semester Fee $1900\nHostels are available\nGlobal Ranking 176","Semester Fee $2200\nHostels are available\nGlobal Ranking 327","Semester Fee $1100\nHostels are not available\nGlobal Ranking 125",
+                    "Semester Fee $1750\nHostels are available\nGlobal Ranking 512",
+                    "Semester Fee $1700\nHostels are available\nGlobal Ranking 975","Semester Fee $2200\nHostels are available\nGlobal Ranking 492","Semester Fee $1400\nHostels are not available\nGlobal Ranking 140","Semester Fee $1400\nHostels are not available\nGlobal Ranking 140"};
+            PrintingColleges(Canadamedical);
+            int n= input.nextInt();
+            SelectingCollege(Canadamedical,n);
+            SelectingCollege(CANDetails,n);
+
+
+        }
+        if (select.equals("GER")) {
+            String[] Germanymedical = {"1) Carl Remigius Medical School", "2) Macromedia University of Applied Sciences", "3) Technische Universität München", "4) Ludwig Maximilian University of Munich", "5)" +
+                    " IFS Studentenkurse – Institut Dr. Rampitsch Berlin", "6) Pepperdine College", "7) Agnes Scott College", "8) Berry College", "9) Emmanuel College", "10) Dalton State College"};
+            String []GERDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891"};
+            PrintingColleges(Germanymedical);
+            int n= input.nextInt();
+            SelectingCollege(Germanymedical,n);
+            SelectingCollege(GERDetails,n);
+
+        }
+        if (select.equals("SK")) {
+            String[] SouthKoreamedical = {"1) Ewha Womans University", "2) Hanyang University", "Seoul National University", "4) Dongduk Women’s University", "5)" +
+                    " Duksung Women’s University", "6) Korea Maritime and Ocean University", "7) Silla University", "8) Tongmyung University", "9) Korea National University", "10) Sejong University"};
+            String []SKDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891"};
+            PrintingColleges(SouthKoreamedical);
+            int n= input.nextInt();
+            SelectingCollege(SouthKoreamedical,n);
+            SelectingCollege(SKDetails,n);
+
+
+        }
+        System.out.println();
+        System.out.println("To select another college PRESS 1\nTo Exit PRESS 2");
+        System.out.println();
+        int option = input.nextInt();
+        if(option==1){
+            Field();
+        }
+        if(option==2){
+            Exit();
+        }
+    }
+    static void EngineeringColleges(){
+        String select;
+        while (true) {
+            select = input.next().toUpperCase();
+            if (select.equals("UK") || select.equals("US")|| select.equals("SW")|| select.equals("JAP")|| select.equals("BEL")|| select.equals("ITL")|| select.equals("CHI")
+                    || select.equals("AUS")|| select.equals("FRA")|| select.equals("TUR")|| select.equals("DEN")|| select.equals("CAN")|| select.equals("GER") || select.equals("SK")) {
+                break;
+            } else {
+                System.out.println("Invalid Input");
+            }
+        }
+
+
+        if (select.equals("UK")) {
+            String[] UKEngineer = {"1) University of Cambridge", "2) University of Oxford", "3) Birkbeck, University of London", "4) Edinburgh Napier University, London", "5) Heriot-Watt University",
+                    "6) University of Informatics ,Edinburgh", "7) Manchester Metropolitan University", "8) University of Mechanical, Aerospace and Civil Engineering", "9) University of Bolton", "10) Birmingham City University"};
+            String []UKDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891"};
+            PrintingColleges(UKEngineer);
+            int n= input.nextInt();
+            SelectingCollege(UKEngineer,n);
+            SelectingCollege(UKDetails,n);
+
+        }
+        if (select.equals("US")) {
+            String[] USAEngineer = {"1) Adelphi University", "2) Cornell University", "3) State University of New York Institute of Technology", "4) Alliant International University", "5)" +
+                    " Stanford University", "6) University of Georgia", "7) Georgia Institute of Technology", "8) University of California, Los Angeles", "9) Loyola Marymount University", "10) Capitol Technology University"};
+            String []USADetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891"};
+            PrintingColleges(USAEngineer);
+            int n= input.nextInt();
+            SelectingCollege(USAEngineer,n);
+            SelectingCollege(USADetails,n);
+
+        }
+        if (select.equals("SW")) {
+            String[] SwitzerlandEngineer = {"1) Kalaidos University of Applied Sciences", "2) SBS Swiss University", "3) Swiss Federal Institute of Technology Lausanne", "4) Federal Institute of Technology in Lausanne"};
+            String []SWDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891"};
+            PrintingColleges(SwitzerlandEngineer);
+            int n= input.nextInt();
+            SelectingCollege(SwitzerlandEngineer,n);
+            SelectingCollege(SWDetails,n);
+
+        }
+        if (select.equals("JAP")) {
+            String[] JapanEngineer = {"1) University of Tokyo", "2)Tokyo Institute of Technology", "3) Shibaura Institute of Technology", "4) Advanced Institute of Industrial Technology", "5)" +
+                    " Hiroshima Institute of Technology", "6) Doshisha University", "7) Kyoto University", "8) Osaka Dental University", "9) Kyoto Institute of Technology", "10) Osaka Institute of Technology"};
+            String []JAPDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891"};
+            PrintingColleges(JapanEngineer);
+            int n= input.nextInt();
+            SelectingCollege(JapanEngineer,n);
+            SelectingCollege(JAPDetails,n);
+
+        }
+        if (select.equals("BEL")) {
+            String[] BelgiumEngineer = {"1) BSIS University of Kent", "2) European Institute of Innovation and Technology", "3) Universite Saint-Louis –Bruxelles", "4) Karel de Grote University College", "5)" +
+                    " BI Norwegian Business School", "6) University of Oslo", "7) Bergen University College", "8) Bocconi University"};
+            String []BELDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891"};
+            PrintingColleges(BelgiumEngineer);
+            int n= input.nextInt();
+            SelectingCollege(BelgiumEngineer,n);
+            SelectingCollege(BELDetails,n);
+
+        }
+        if (select.equals("ITL")) {
+            String[] ItalyEngineer = {"1) Guglielmo Marconi University", "2) John Cabot University", "3) University Niccolò Cusano", "4) European University Institute", "5)" +
+                    " University of Pisa", "6) University of Messina", "7) University of Catania", "8) University of Pavia", "9) Marangoni Institute Milan"};
+            String []ITLDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891"};
+            PrintingColleges(ItalyEngineer);
+            int n= input.nextInt();
+            SelectingCollege(ItalyEngineer,n);
+            SelectingCollege(ITLDetails,n);
+
+        }
+        if (select.equals("CHI")) {
+            String[] ChinaEngineer = {"1) Shaanxi Normal University.", "2) Xi´an International Studies University", "3) The Central Academy of Engineering, China.", "4) Beijing Jiao tong University", "5)" +
+                    " Hebei University of Technology", "6) Civil Aviation University of China", "7) South China University of Technology"};
+            String []CHIDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891"};
+            PrintingColleges(ChinaEngineer);
+            int n= input.nextInt();
+            SelectingCollege(ChinaEngineer,n);
+            SelectingCollege(CHIDetails,n);
+
+        }
+        if (select.equals("AUS")) {
+            String[] AustrailiaEngineer = {"1) Holmes Institute", "2) RMIT University", "3) Melbourne Institute of Technology.", "4) University of Sydney", "5)" +
+                    " University of Technology, Sydney", "6) Melbourne School of Engineering", "7) Academy of Information Technology", "8) Canberra Institute of Technology"};
+            String []AUSDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891"};
+            PrintingColleges(AustrailiaEngineer);
+            int n= input.nextInt();
+            SelectingCollege(AustrailiaEngineer,n);
+            SelectingCollege(AUSDetails,n);
+
+        }
+        if (select.equals("FRA")) {
+            String[] FranceEngineer = {"1) Institute European_ European Institute (IE. EI).", "2) University of Nice Sophia Antipolis", "3) Higher Institute of Aeronautics and space", "4) Grenoble Institute of Technology", "5)" +
+                    " Claude Bernard university Lyon ", "6) Ecole Centrale de Lyon", "7) Institute of Information Technology, Electronic, Automation", "8) Pierre and Mari Curie University.", "9) Paris Sorbonne University", "10) Paris West University Nanterre La Defense"};
+            String []FRADetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891"};
+            PrintingColleges(FranceEngineer);
+            int n= input.nextInt();
+            SelectingCollege(FranceEngineer,n);
+            SelectingCollege(FRADetails,n);
+
+        }
+        if (select.equals("TUR")) {
+            String[] TurkeyEngineer = {"1) Middle East technical university", "2) Ankara university", "3) Istanbul Technical University", "4) Yildiz Technical University","5) Ghazi university"};
+            String []TURDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891"};
+            PrintingColleges(TurkeyEngineer);
+            int n= input.nextInt();
+            SelectingCollege(TurkeyEngineer,n);
+            SelectingCollege(TURDetails,n);
+
+        }
+        if (select.equals("DEN")) {
+            String[] DenmarkEngineer = {"1) Aalborg University", "2) Technical University of Aalbrog ", "3) Aarhus University School of Engineering", "4) The University of Copenhagen", "5)" +
+                    " IT University of Copenhagen", "6) Metropolitan University College", "7) Copenhagen Polytechnic", "8) Syddansk Erhvervsakademi",
+                    "9) University of Southern Denmark", "10) Via University College. Horsens"};
+            String []DENDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891"};
+            PrintingColleges(DenmarkEngineer);
+            int n= input.nextInt();
+            SelectingCollege(DenmarkEngineer,n);
+            SelectingCollege(DENDetails,n);
+
+        }
+        if (select.equals("CAN")) {
+            String[] CanadaEngineer = {"1) University of Waterloo", "2) University of Toronto", "3) University of British Columbia", "4) University of Ontario Institute Technology", "5)" +
+                    " Vancouver Island University", "6) University Canada West", "7) Ryerson University", "8) Ontario Tech University"};
+            String []CANDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891"};
+            PrintingColleges(CanadaEngineer);
+            int n= input.nextInt();
+            SelectingCollege(CanadaEngineer,n);
+            SelectingCollege(CANDetails,n);
+
+
+        }
+        if (select.equals("GER")) {
+            String[] GermanyEngineer = {"1) Simon Fraser University", "2) Capilano University", "3) University of Alberta", "4) Technical University of Munich", "5)" +
+                    " Technical University of Berlin", "6) Karlsruhe Institute of Technology", "7) University of Duisburg-Essen", "8) Technical University of Darmstadt", "9) \n" +
+                    "Technical University of Dresden", "10) Braunschweig University of Technology"};
+            String []GERDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295",
+                    "Semester Fee $2100\nHostels are not available\nGlobal Ranking 881","Semester Fee $1700\nHostels are available\nGlobal Ranking 891"};
+            PrintingColleges(GermanyEngineer);
+            int n= input.nextInt();
+            SelectingCollege(GermanyEngineer,n);
+            SelectingCollege(GERDetails,n);
+
+        }
+        if (select.equals("SK")) {
+            String[] SouthKoreaEngineer = {"1) Seoul National University of Scieance and Technology", "2) Hansung University", "3) Kyungsung University", "4)" +
+                    " Dong-A University", "5) Sungkyunwan University", "6) Sogang University", "7) Hongik University", "8) Soongsil University", "9) Catholic University of Korea"};
+            String []SKDetails = {"Semester Fee $900\nHostels are available\nGlobal Ranking 76","Semester Fee $1200\nHostels are available\nGlobal Ranking 627","Semester Fee $1000\nHostels are not available\nGlobal Ranking 105","Semester Fee $1200\nHostels are available\nGlobal Ranking 322",
+                    "Semester Fee $700\nHostels are available\nGlobal Ranking 775","Semester Fee $2200\nHostels are available\nGlobal Ranking 192","Semester Fee $1400\nHostels are not available\nGlobal Ranking 540","Semester Fee $1800\nHostels are  available\nGlobal Ranking 955","Semester Fee $1600\nHostels are not available\nGlobal Ranking 295"};
+            PrintingColleges(SouthKoreaEngineer);
+            int n= input.nextInt();
+            SelectingCollege(SouthKoreaEngineer,n);
+            SelectingCollege(SKDetails,n);
+
+        }
+        System.out.println();
+        System.out.println("To select another college PRESS 1\nTo Exit PRESS 2");
+        System.out.println();
+        int option = input.nextInt();
+        if(option==1){
+            Field();
+        }
+        if(option==2){
+            Exit();
+        }
+
+
+    }
+
+
+    public static void PrintingColleges(String x[]) {
+
+        for (int i = 0; i < x.length; i++) {
+            System.out.println(x[i] + "");
+        }
+        System.out.println("----------------------------------");
+        System.out.println("   Select a College E.g 1,2,3");
+        System.out.println("----------------------------------");
+    }
+
+    public static void SelectingCollege(String arr[],int num) {
+        while (true) {
+            try {
+                // num = input.nextInt();
+                num = num - 1; // because index of array starts from 0
+
+                if (num >=0 && num <= arr.length) {
+                    System.out.println(arr[num]);
+                    break;
+
+                } else {
+                    System.out.println("Invalid Input");
+                }
+
+            }
+            catch (InputMismatchException e) {
+                String MissMatch = input.next();
+                System.out.println("Pls Enter a Integer Value");
+            }
+        }
+
+    }
+
+    static void RemoveCountry(List<String>n,int a){
+        System.out.println("----------------------------------");
+        System.out.println("Select a Country to Remove E.g 1,2,3");
+        System.out.println("----------------------------------");
+        while(true){
+            try{
+                a = input.nextInt();
+                if(a>0 && a<=n.size()){
+                    a=a-1;
+                    n.remove(a);
+                    System.out.println("Country Removed Successfully");
+                    break;
+                }
+                else
+                    System.out.println("Invalid Input");
+            }
+            catch(InputMismatchException e){
+                String Missmatch = input.next();
+                System.out.println("invalid, Enter String");
+            }
+        }
+
+    }
+    static  void AddCountry(List<String>n,String a) {
+        System.out.println("----------------------------------");
+        System.out.println("    ADD ANY COUNTRY YOU WANT");
+        System.out.println("----------------------------------");
+        String blank = input.nextLine();
+        a = input.nextLine();
+        n.add(a);
+        System.out.println("Country ADDED Successfully");
+
+
+
+    }
+}
+
+
+
+
+
